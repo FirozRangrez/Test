@@ -40,17 +40,24 @@
     <div style="width:80%; text-align:left;">
         @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            
-        <div><h1>@Session["Success"]</h1></div>
-        <div><h3 style="color:red">@Session["Error"]</h3></div>
-        <p style="display:flex">
-            <br />
-            <label for="file">Upload file: &nbsp;&nbsp;&nbsp;</label>
-            <input type="file" name="file" id="file" />
-            <input type="submit" value="Upload" />
-            
-        </p>
-    }
+
+            if (Session["Success"] == null)
+            {
+
+                <div><h3 style="color:red">@Session["Error"]</h3></div>
+            }
+            else
+            { 
+                <div><h1>@Session["Success"]</h1></div>
+            }
+            <p style="display:flex">
+                <br />
+                <label for="file">Upload file: &nbsp;&nbsp;&nbsp;</label>
+                <input type="file" name="file" id="file" />
+                <input type="submit" value="Upload" />
+
+            </p>
+        }
     </div>
 
     <table class="table" border="1">
