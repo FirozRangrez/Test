@@ -17,7 +17,7 @@ namespace Test.Controllers
         public ActionResult UploadFile(HttpPostedFileBase file)
         {
             GoogleDriveFilesRepository.FileUpload(file);
-            Session["Success"] = "Your File is Uploaded Successfully";
+            Session["Success"] = "Hooray! Your File is Uploaded Successfully";
             return RedirectToAction("GetGoogleDriveFiles");
         }
 
