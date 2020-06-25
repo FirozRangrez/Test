@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Test.Models.GoogleDriveFiles>
+@{
+    ViewBag.Title = "Google Drive API ";
+}
+
+<h2>Google Drive API</h2>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<style type="text/css">
+    #header {
+        width: 100%;
+        background-color: #CCCCCC;
+        text-align: center;
+    }
+
+    #layouttable {
+        border: 0px;
+        width: 100%;
+        font-family: 'Segoe UI';
+    }
+
+        #layouttable td.col1 {
+            width: 20%;
+            vertical-align: top;
+        }
+
+        #layouttable td.col2 {
+            width: 60%;
+            vertical-align: top;
+            background-color: #E8E8E8;
+        }
+
+        #layouttable td.col3 {
+            width: 20%;
+            vertical-align: top;
+        }
+</style>
+
+<center>
+    <div style="width:80%; text-align:left;">
+        @using (Html.BeginForm("UploadFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+        <p style="display:flex">
+
+            @Session["Success"]<br />
+            <label for="file">Upload file:</label>
+            <input type="file" name="file" id="file" />
+            <input type="submit" value="Upload" />
+
+            <button id="Logout">
+                Log out
+            </button>
+        </p>
+        }
+    </div>
+
+    <table class="table" border="1">
+        <tr id="header">
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Version)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedTime)
+            </th>
+        </tr>
+
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr id="layouttable">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @{
+                            long? KiloByte = @item.Size / 1024;
+                            string NewSize = KiloByte + " KB";
+                        }
+                        @NewSize
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Version)
+                    </td>
+                    <td>
+                        @string.Format("{0: MM/dd/yyyy}", Convert.ToDateTime(Html.DisplayFor(modelItem => item.CreatedTime).ToString()))
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <td colspan="6">No files found</td>
+        }
+
+    </table>
+
+</center>
+
+<script>
+    $(document).ready(function () {
+        $('#Logout').click(function () {
+            window.location.href = "https://www.google.com/accounts/Logout";
+        })
+    });
+</script>
