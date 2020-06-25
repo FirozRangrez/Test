@@ -17,8 +17,16 @@ namespace Test.Controllers
         public ActionResult UploadFile(HttpPostedFileBase file)
         {
             GoogleDriveFilesRepository.FileUpload(file);
+            if (file == null)
+            {
+                Session["Error"] = "Please Select The File";
+                return RedirectToAction("GetGoogleDriveFiles");
+            }
+            else 
+            { 
             Session["Success"] = "Hooray! Your File is Uploaded Successfully";
             return RedirectToAction("GetGoogleDriveFiles");
+            }
         }
 
     }
